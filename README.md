@@ -14,7 +14,7 @@ If you want to try other/newer [SWT structure files](https://github.com/chessio/
 ## Usage
 
 	// load from file and parse
-	parse.fromSWTfile('/home/fnogatz/Desktop/DLM2012.SWT', function(err, tnmt) {
+	parse.fromSWTfile('/path/to/my.SWT', function(err, tnmt) {
 		// handle your tournament
 	});
 
