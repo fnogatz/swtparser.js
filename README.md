@@ -59,7 +59,7 @@ This will return a hash with the first class objects `general`, `players` and `p
 			},
 			...
 		],
-		'pairings_players': [
+		'pairings_players': [	// only if pairings already set
 			{
 				'4000': '4000-2',
 				'4001': '4b',
@@ -88,7 +88,7 @@ This will return a hash with the first class objects `general`, `players` and `p
 			}
 			...
 		],
-		'pairings_teams': [	// only in team tournaments
+		'pairings_teams': [	// only in team tournaments and if pairings already set
 			{
 				'3000': 'ffff',
 				'3001': '3001-1',
