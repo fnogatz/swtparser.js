@@ -1,0 +1,22 @@
+{
+  "author": "Falco Nogatz <fnogatz@gmail.com> (http://nogatz.net/)",
+  "name": "swtparser",
+  "description": "Parser for Swiss-Chess Tournament (SWT) files",
+  "keywords": ["chess", "swt", "swiss-chess"],
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "dependencies": {
+    "csv": "0.0.x",
+    "async": "0.1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chessio/node-swtparser.git"
+  },
+  "bugs": {
+    "url": "http://github.com/chessio/node-swtparser/issues"
+  }
+}
