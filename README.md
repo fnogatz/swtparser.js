@@ -47,12 +47,12 @@ This will return a hash with the first class objects `general`, `players` and `p
 				'2000': 'Surname, Prename',
 				'2001': 'MyCountry',
 				'2002': '20',
-				'2003': '2449',
-				'2004': '2458',
+				'2003': '2479',
+				'2004': '2498',
 				'2005': '1031',
 				'2006': 'GER',
 				'2007': '',
-				'2008': '1993      ',
+				'2008': '1973      ',
 				...
 				// automatically added:
 				'positionInSWT': 0
@@ -88,7 +88,7 @@ This will return a hash with the first class objects `general`, `players` and `p
 			}
 			...
 		],
-		'pairings_players': [	// only in team tournaments
+		'pairings_teams': [	// only in team tournaments
 			{
 				'3000': 'ffff',
 				'3001': '3001-1',
