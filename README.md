@@ -110,7 +110,7 @@ This will return a hash with the first class objects `general`, `players` and `p
 
 ## Supported SWT versions
 
-Because this module uses the SWT structure files of [chessio/SWT-structure-files](https://github.com/chessio/SWT-structure-files), it supports the file versions provided by those structure information. Currently only team tournaments of SWT version 8.xx can be parsed.
+Because this module uses the SWT structure files of [chessio/SWT-structure-files](https://github.com/chessio/SWT-structure-files), it supports the file versions provided by those structure information. Currently only tournaments of SWT version 8.xx can be parsed.
 
 ## Licence
 
