@@ -112,11 +112,6 @@ This will return a hash with the first class objects `general`, `players` and `p
 
 Because this module uses the SWT structure files of [chessio/SWT-structure-files](https://github.com/chessio/SWT-structure-files), it supports the file versions provided by those structure information. Currently only team tournaments of SWT version 8.xx can be parsed.
 
-## Todo
-
-- Players can not be parsed in tournaments without any paired round
-- Creation of SWT file from given JSON tournament
-
 ## Licence
 
 	Copyright (c) 2012 Falco Nogatz (fnogatz@gmail.com)
