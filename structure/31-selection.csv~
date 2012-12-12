@@ -1,0 +1,12 @@
+# Zugzwang Project: SWT parser
+# http://www.zugzwang.org/projects/swtparser
+# @author Falco Nogatz, <fnogatz@gmail.com>, 2012
+#
+# Definition file for determination of tournament modus
+# Definitionsdatei für Turniermodus
+#
+# [bin]	[value]
+00	31-0
+01	31-1
+02	31-2
+03	31-3

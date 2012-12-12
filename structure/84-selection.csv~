@@ -1,0 +1,23 @@
+# Zugzwang Project: SWT parser
+# http://www.zugzwang.org/projects/swtparser
+# @author Falco Nogatz, <fnogatz@gmail.com>, 2012
+#
+# Definition file for ranking systems
+# Defintionsdatei für Feinwertungen
+#
+# [bin]	[value]
+00	84-0
+01	84-1
+02	84-2
+03	84-3
+04	84-4
+05	84-5
+06	84-6
+07	84-7
+08	84-8
+09	84-9
+0A	84-10
+0C	84-11
+0D	84-12
+10	84-13
+13	84-14
