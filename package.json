@@ -1,9 +1,9 @@
 {
-  "author": "Falco Nogatz <fnogatz@gmail.com> (http://nogatz.net/)",
+  "author": "Falco Nogatz <fnogatz@gmail.com>",
   "name": "swtparser",
   "description": "Parser for Swiss-Chess Tournament (SWT) files",
   "keywords": ["chess", "swt", "swiss-chess"],
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "engines": {
     "node": ">=0.6"
