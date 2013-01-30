@@ -1,29 +1,67 @@
-node-swtparser
-==============
+swtparser
+=========
 
-Parse SWT Swiss-Chess Tournament files with node.js.
+Parse SWT Swiss-Chess Tournament files with JavaScript, either by using [node.js](http://nodejs.org) or directly in your Browser.
 
-## Install
+## Usage with node.js
+
+Simply install the package via
 
 ```bash
 npm install swtparser
 ```
 
-If you want to try other/newer [SWT structure files](https://github.com/chessio/SWT-structure-files) simply put them into the `/structures` folder.
+You can either use the provided `parse.fromFile`, `parse.fromBuffer` and `parse.fromDataView` functions or put what you want directly into the parser:
 
-## Usage
+	var parse = require('swtparser');
+	function handleTournament(err, tnmt) {
+		// do whatever you want
+	}
 
-	// load from file and parse
-	parse.fromSWTfile('/path/to/my.SWT', function(err, tnmt) {
-		// handle your tournament
-	});
+	parse('/path/to/my.SWT', handleTournament);
 
-	// parse buffer
-	parse.fromSWT(myBuffer, function(err, tnmt) {
-		// handle your tournament
-	});
+	// or:
+	parse(myBuffer, handleTournament);
 
-This will return a hash with the first class objects `general`, `players` and `pairings_players`. In case of team tournaments `teams` and `pairings_teams` are provided too:
+	// or:
+	parse(new DataView(myBuffer), handleTournament);
+
+Internally the DataView method is used for the parsing process.
+
+If you want to try other/newer [SWT structure files](https://github.com/chessio/SWT-structure-files) simply put them into the `/structures` folder and run the following npm command to build a new lib/structure.json file:
+
+```bash
+npm run-script build-structure
+```
+
+## Usage within the Browser
+
+The swtparser also works in the Browser. Simply use the swtparser.browser.js in your HTML files. The Browser version only allows to parse DataView objects. Here is an [example snippet](https://github.com/chessio/node-swtparser/tree/master/example/browser.html):
+
+	<script src="swtparser.browser.js"></script>
+	<script type="text/javascript">
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			swtparser.parse(new DataView(this.result), function(err, tnmt) {
+				// handle your tournament
+			});
+		}
+		reader.readAsArrayBuffer(file);
+	</script>
+
+If you want to try other/newer [SWT structure files](https://github.com/chessio/SWT-structure-files) you have to put them into the `/structures` folder and run the following commands:
+
+```bash
+# rebuild the /lib/structure.json
+npm run-script build-structure
+
+# rebuild swtparser.browser.js
+npm run-script build-browser
+```
+
+## Returned Object
+
+The swtparser returns a hash with the first class objects `general`, `players` and `pairings_players`. In case of team tournaments `teams` and `pairings_teams` are provided too:
 
 	{
 		// the numeric keys are those of the structure files

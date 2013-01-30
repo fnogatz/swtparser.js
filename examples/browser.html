@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>node-chesstournament (Browser version)</title>
+    <script src="../swtparser.browser.js"></script>
+    <script type="text/javascript">
+      function handleFileSelect(evt) {
+        var file = evt.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          view = new DataView(this.result);
+          swtparser.parse(view, function(err, tnmt) {
+            alert('Tournament name: '+tnmt.general[65]);
+            t = tnmt; // access it via Firebug...
+          });
+        }
+
+        reader.readAsArrayBuffer(file);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('file').addEventListener('change', handleFileSelect, false);
+      });
+    </script>
+  </head>
+  <body>
+    <input type="file" id="file" name="file" />
+  </body>
+</html>

@@ -10,7 +10,7 @@
 1		int	1
 3		int	2
 5		int	3
-7		int	4
+7	8	int	4
 9		int	5
 B		int	6
 AF		int	7
@@ -42,7 +42,7 @@ F5	130	asc	12
 258		int	33
 25C		int	34
 25E		boo	35
-261	262	inb	9999
+261	262	int	9999
 263		sel:84	36
 265		sel:84	37
 267		sel:84	38
@@ -52,7 +52,7 @@ F5	130	asc	12
 26C		sel:84	42
 26D		sel:84	43
 26F		boo	44
-272	273	inb	45
+272	273	int	45
 278		boo	46
 27C		int	47
 28B		bin	48
