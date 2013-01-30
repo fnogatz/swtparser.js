@@ -92,8 +92,6 @@ function loadStructureCSV(filename, callback) {
 
 var Structure = function(version) {
   // ignore version yet
-  this.path = structurePath;
-
   this.parameters = null;
   this.structures = {};
   this.selections = {};
@@ -103,7 +101,7 @@ var Structure = function(version) {
 Structure.prototype.init = function(callback) {
   var self = this;
 
-  fs.readdir(this.path, function(err, files) {
+  fs.readdir(structurePath, function(err, files) {
     if (err)
       return callback(err);
 
@@ -112,7 +110,7 @@ Structure.prototype.init = function(callback) {
         callback(null);
       }
       else if (/^types.csv$/.test(item)) {
-        loadKeyValueCSV(self.path+'/'+item, function(err, csv) {
+        loadKeyValueCSV(structurePath+'/'+item, function(err, csv) {
           if (err)
             return callback(err);
 
@@ -121,7 +119,7 @@ Structure.prototype.init = function(callback) {
         });
       }
       else if (/structure\.csv/.test(item)) {
-        loadKeyValueCSV(self.path+'/'+item, function(err, csv) {
+        loadKeyValueCSV(structurePath+'/'+item, function(err, csv) {
           if (err)
             return callback(err);
           
@@ -129,7 +127,7 @@ Structure.prototype.init = function(callback) {
           callback(null);
         });
       } else if (/\-selection\.csv/.test(item)) {
-        loadKeyValueCSV(self.path+'/'+item, function(err, csv) {
+        loadKeyValueCSV(structurePath+'/'+item, function(err, csv) {
           if (err)
             return callback(err);
 
@@ -137,7 +135,7 @@ Structure.prototype.init = function(callback) {
           callback(null);
         });
       } else if (/\.csv/.test(item)) {
-        loadStructureCSV(self.path+'/'+item, function(err, structure) {
+        loadStructureCSV(structurePath+'/'+item, function(err, structure) {
           if (err)
             return callback(err);
 

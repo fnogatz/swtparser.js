@@ -3,8 +3,38 @@
   <head>
     <meta charset="utf-8">
     <title>swtparser (Browser version)</title>
+    <style type="text/css"> 
+      pre { outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+      .string { color: green; }
+      .number { color: darkorange; }
+      .boolean { color: blue; }
+      .null { color: magenta; }
+      .key { color: red; }
+    </style>
     <script src="../swtparser.browser.js"></script>
     <script type="text/javascript">
+      function syntaxHighlight(json) {
+        if (typeof json != 'string') {
+          json = JSON.stringify(json, undefined, 2);
+        }
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+          var cls = 'number';
+          if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+              cls = 'key';
+            } else {
+              cls = 'string';
+            }
+          } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+          } else if (/null/.test(match)) {
+            cls = 'null';
+          }
+          return '<span class="' + cls + '">' + match + '</span>';
+        });
+      }
+
       function handleFileSelect(evt) {
         var file = evt.target.files[0];
         var reader = new FileReader();
@@ -12,7 +42,7 @@
         reader.onload = function(e) {
           view = new DataView(this.result);
           swtparser.parse(view, function(err, tnmt) {
-            alert('Tournament name: '+tnmt.general[65]);
+            document.body.appendChild(document.createElement('pre')).innerHTML = syntaxHighlight(JSON.stringify(tnmt, undefined, 4));
             t = tnmt; // access it via Firebug...
           });
         }
