@@ -3,14 +3,15 @@
   "name": "swtparser",
   "description": "Parser for Swiss-Chess Tournament (SWT) files",
   "keywords": ["chess", "swt", "swiss-chess"],
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "lib/index.js",
   "engines": {
     "node": ">=0.8"
   },
   "devDependencies": {
     "async": "0.1.x",
-    "csv": "0.0.x"
+    "csv": "0.0.x",
+    "browserbuild": "0.6.x"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,6 @@
   "scripts": {
     "prepublish": "npm run-script build-structure",
     "build-structure": "node build-structure.js > lib/structure.json",
-    "build-browser": "sed -e '/Structure = require/r lib/structure.json' -e 's/Structure = require(..\\/structure.json.);/Structure = /ig' lib/from-data-view.js | sed -e ':a;N;$!ba;s/Structure = \\n/Structure = /g' > swtparser.browser.js"
+    "build-browser": "./node_modules/browserbuild/bin/browserbuild -m from-data-view:parse -b lib/ lib/from-data-view.js lib/structure.json > swtparser.browser.js"
   }
 }
