@@ -23,6 +23,6 @@
   "scripts": {
     "prepublish": "npm run-script build-structure",
     "build-structure": "node build-structure.js > lib/structure.json",
-    "build-browser": "./node_modules/browserbuild/bin/browserbuild -m from-data-view:parse -b lib/ lib/from-data-view.js lib/structure.json > swtparser.browser.js"
+    "build-browser": "./node_modules/browserbuild/bin/browserbuild -m from-data-view -g parseSWT -b lib/ lib/from-data-view.js lib/structure.json > swtparser.browser.js"
   }
 }
