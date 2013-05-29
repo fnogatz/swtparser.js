@@ -16,7 +16,7 @@ function loadKeyValueCSV(filename, callback) {
   var out = {};
 
   csv()
-  .fromPath(filename, {
+  .from.path(filename, {
     delimiter: '\t'
   })
   .on('data', function(data, index) {
@@ -44,7 +44,7 @@ function loadStructureCSV(filename, callback) {
   var out = {};
 
   csv()
-  .fromPath(filename, {
+  .from.path(filename, {
     delimiter: '\t'
   })
   .transform(function(data) {

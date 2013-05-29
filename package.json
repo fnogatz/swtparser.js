@@ -9,8 +9,8 @@
     "node": ">=0.8"
   },
   "devDependencies": {
-    "async": "0.1.x",
-    "csv": "0.0.x",
+    "async": "0.2.x",
+    "csv": "0.3.x",
     "browserbuild": "0.6.x"
   },
   "repository": {
