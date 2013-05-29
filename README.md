@@ -1,7 +1,7 @@
 swtparser
 =========
 
-Parse SWT Swiss-Chess Tournament files with JavaScript, either by using [node.js](http://nodejs.org) or directly in your Browser.
+Parse SWT [Swiss-Chess](http://swiss-chess.de/) Tournament files with JavaScript, either by using [node.js](http://nodejs.org) or directly in your Browser.
 
 ## Usage with node.js
 
@@ -42,7 +42,7 @@ The swtparser also works in the Browser. Simply use the swtparser.browser.js in 
 	<script type="text/javascript">
 		var reader = new FileReader();
 		reader.onload = function(e) {
-			swtparser.parse(new DataView(this.result), function(err, tnmt) {
+			parseSWT(new DataView(this.result), function(err, tnmt) {
 				// handle your tournament
 			});
 		}
@@ -152,7 +152,7 @@ Because this module uses the SWT structure files of [chessio/SWT-structure-files
 
 ## Licence
 
-	Copyright (c) 2012 Falco Nogatz (fnogatz@gmail.com)
+	Copyright (c) 2012-2013 Falco Nogatz (fnogatz@gmail.com)
 
 	 Permission is hereby granted, free of charge, to any person obtaining a copy
 	 of this software and associated documentation files (the "Software"), to deal
