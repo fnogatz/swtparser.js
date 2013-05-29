@@ -36,7 +36,7 @@ npm run-script build-structure
 
 ## Usage within the Browser
 
-The swtparser also works in the Browser. Simply use the swtparser.browser.js in your HTML files. The Browser version only allows to parse DataView objects. Here is an [example snippet](https://github.com/chessio/node-swtparser/tree/master/browser/example.html):
+The swtparser also works in the Browser. Simply use the swtparser.browser.js in your HTML files. The Browser version only allows to parse DataView objects. Here is an [example snippet](https://github.com/fnogatz/node-swtparser/tree/master/browser/example.html):
 
 	<script src="swtparser.js"></script>
 	<script type="text/javascript">
