@@ -24,7 +24,7 @@ You can either use the provided `parse.fromFile`, `parse.fromBuffer` and `parse.
 	parse(myBuffer, handleTournament);
 
 	// or:
-	parse(new DataView(myBuffer), handleTournament);
+	parse(new DataView(myArrayBuffer), handleTournament);
 
 Internally the DataView method is used for the parsing process.
 
@@ -36,9 +36,9 @@ npm run-script build-structure
 
 ## Usage within the Browser
 
-The swtparser also works in the Browser. Simply use the swtparser.browser.js in your HTML files. The Browser version only allows to parse DataView objects. Here is an [example snippet](https://github.com/chessio/node-swtparser/tree/master/example/browser.html):
+The swtparser also works in the Browser. Simply use the swtparser.browser.js in your HTML files. The Browser version only allows to parse DataView objects. Here is an [example snippet](https://github.com/chessio/node-swtparser/tree/master/browser/example.html):
 
-	<script src="swtparser.browser.js"></script>
+	<script src="swtparser.js"></script>
 	<script type="text/javascript">
 		var reader = new FileReader();
 		reader.onload = function(e) {
