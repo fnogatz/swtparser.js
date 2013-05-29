@@ -19,7 +19,7 @@ function loadKeyValueCSV(filename, callback) {
   .from.path(filename, {
     delimiter: '\t'
   })
-  .on('data', function(data, index) {
+  .on('record', function(data, index) {
     if (data[0].match(/^[\w\d]/)) {
       out[data[0]] = data[1];
     }
@@ -74,7 +74,7 @@ function loadStructureCSV(filename, callback) {
 
     return ret;
   })
-  .on('data', function(data, index) {
+  .on('record', function(data, index) {
     if (data) {
       var field = data.field;
       delete data.field;

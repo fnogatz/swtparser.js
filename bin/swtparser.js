@@ -20,5 +20,5 @@ parser.fromFile(opts.input, function(err, tnmt) {
   if (err)
     throw err;
 
-  console.log(tnmt);
+  console.log(JSON.stringify(tnmt, null, 2));
 });
