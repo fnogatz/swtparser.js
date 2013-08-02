@@ -1,7 +1,7 @@
 # Zugzwang Project: SWT parser
 # http://www.zugzwang.org/projects/swtparser
 # @author Gustaf Mossakowski, <gustaf@koenige.org>, 2005, 2012
-# @author Falco Nogatz, <fnogatz@gmail.com>, 2012
+# @author Falco Nogatz, <fnogatz@gmail.com>, 2012, 2013
 #
 # Definition file for player data
 # Defintionsdatei für Spielerdaten
@@ -19,7 +19,7 @@
 80	89	asc	2008
 97		asc	2009
 99	9D	asc	2010
-9F	A1	asc	2011
+9F	A2	asc	2011
 AD		int	2012
 B8		asc	2013
 BC		asc	2014
@@ -40,7 +40,7 @@ E7		int	2027
 111		int	2029 
 124		int	2030
 128		int	2031
-12C	12D	int	2032
+12C		int	2032
 144	14F	asc	2033
 151	15C	asc	2034
 15E	185	asc	2035
