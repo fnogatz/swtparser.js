@@ -28,7 +28,7 @@ You can either use the provided `parse.fromFile`, `parse.fromBuffer` and `parse.
 
 Internally the DataView method is used for the parsing process.
 
-If you want to try other/newer [SWT structure files](https://github.com/chessio/SWT-structure-files) simply put them into the `/structures` folder and run the following npm command to build a new lib/structure.json file:
+If you want to try other/newer [SWT structure files](https://github.com/fnogatz/SWT-structure-files) simply put them into the `/structures` folder and run the following npm command to build a new lib/structure.json file:
 
 ```bash
 npm run-script build-structure
@@ -49,7 +49,7 @@ The swtparser also works in the Browser. Simply use the swtparser.browser.js in 
 		reader.readAsArrayBuffer(file);
 	</script>
 
-If you want to try other/newer [SWT structure files](https://github.com/chessio/SWT-structure-files) you have to put them into the `/structures` folder and run the following commands:
+If you want to try other/newer [SWT structure files](https://github.com/fnogatz/SWT-structure-files) you have to put them into the `/structures` folder and run the following commands:
 
 ```bash
 # rebuild the /lib/structure.json
@@ -148,7 +148,7 @@ The swtparser returns a hash with the first class objects `general`, `players` a
 
 ## Supported SWT versions
 
-Because this module uses the SWT structure files of [chessio/SWT-structure-files](https://github.com/chessio/SWT-structure-files), it supports the file versions provided by those structure information. Currently only tournaments of SWT version 8.xx can be parsed.
+Because this module uses the SWT structure files of [fnogatz/SWT-structure-files](https://github.com/fnogatz/SWT-structure-files), it supports the file versions provided by those structure information. Currently only tournaments of SWT version 8.xx can be parsed.
 
 ## Licence
 
