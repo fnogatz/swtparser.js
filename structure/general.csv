@@ -90,6 +90,16 @@ F5	130	asc	12
 534		int	80
 538		sel	81
 53A		sel	82
+1576		int	169
+1578		int	170
+157A		int	171
+157C		int	172
+157E		int	173
+1582		int	174
+158A		int	175
+158E		int	176
+1592		int	177
+1596		int	178
 2CB4		boo	83
 2CC1	2CC2	dat	89
 2CC3	2CC4	tim	90
