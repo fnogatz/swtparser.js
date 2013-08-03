@@ -78,18 +78,18 @@ function parseCard(view, offset, structure, Structure) {
   for (var field in structure) {
     if (structure[field].type === 'int' || structure[field].type === 'inb') {
       // int: little endian; inb: big endian
-      var endian = (structure[field].type === 'int');
+      var littleEndian = (structure[field].type === 'inb');
       if (structure[field].hasOwnProperty('where')) {
-        object[field] = view.getInt8(offset + structure[field].where, endian);
+        object[field] = view.getInt8(offset + structure[field].where, littleEndian);
       }
       else if (structure[field].hasOwnProperty('from') && structure[field].hasOwnProperty('to')) {
         var diff = structure[field].to - structure[field].from;
         if (diff === 0)
-          object[field] = view.getInt8(offset + structure[field].from, endian);
+          object[field] = view.getInt8(offset + structure[field].from, littleEndian);
         else if (diff === 1)
-          object[field] = view.getInt16(offset + structure[field].from, endian);
+          object[field] = view.getInt16(offset + structure[field].from, littleEndian);
         else if (diff === 2)
-          object[field] = view.getInt32(offset + structure[field].from, endian);
+          object[field] = view.getInt32(offset + structure[field].from, littleEndian);
       }
     }
     else if (structure[field].type === 'boo') {
