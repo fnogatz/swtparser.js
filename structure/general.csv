@@ -28,6 +28,7 @@ F5	130	asc	12
 238		int	19
 23A		int	20
 23C		sel:84	21
+23D		sel:84	181
 23E		boo	22
 243		boo	23
 246		sel	24
@@ -45,12 +46,15 @@ F5	130	asc	12
 261	262	inb	9999
 263		sel:84	36
 265		sel:84	37
+266		sel:84	182
 267		sel:84	38
+268		sel:84	183
 269		sel:84	39
 26A		sel:84	40
 26B		sel:84	41
 26C		sel:84	42
 26D		sel:84	43
+26E		sel:84	180
 26F		boo	44
 272	273	inb	45
 278		boo	46
@@ -59,6 +63,7 @@ F5	130	asc	12
 28C		boo	49
 290		sel:84	50
 291		boo	51
+292		boo	179
 29D		sel	52
 2AE		boo	53
 2D2		boo	54
@@ -85,8 +90,8 @@ F5	130	asc	12
 52C		int	75
 52E		int	76
 52F		int	77
-530		boo	78
-531		boo	79
+530		sel	78
+531		sel:78	79
 534		int	80
 538		sel	81
 53A		sel	82

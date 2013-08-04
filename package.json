@@ -3,7 +3,7 @@
   "name": "swtparser",
   "description": "Parser for Swiss-Chess Tournament (SWT) files",
   "keywords": ["chess", "swt", "swiss-chess"],
-  "version": "1.1.4",
+  "version": "1.1.5",
   "main": "lib/index.js",
   "engines": {
     "node": ">=0.8"
