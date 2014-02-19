@@ -29,6 +29,7 @@
     "download-structure": "mkdir tmp; cd tmp; wget https://github.com/fnogatz/SWT-structure-files/archive/master.zip; unzip master.zip; cp -R SWT-structure-files-master/structure/* ../structure; cd ..; rm -Rf tmp;",
     "build-structure": "node build-structure.js > lib/structure.json",
     "build-browser": "./node_modules/browserbuild/bin/browserbuild -m from-data-view -g parseSWT -b lib/ lib/from-data-view.js lib/structure.json > browser/swtparser.js",
-    "test": "node ./test/index"
+    "test": "node ./test/index",
+    "fake-tests": "node bin/swtparser.js < test/SWT/SwissIndividual.SWT > test/JSON/SwissIndividual.json; node bin/swtparser.js < test/SWT/SwissTeam.SWT > test/JSON/SwissTeam.json"
   }
 }
