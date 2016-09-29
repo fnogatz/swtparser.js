@@ -22,7 +22,7 @@ C0	C2	asc	1011
 C9		int	1012
 CB		int	1013
 CD		int	1014
-CF		int	1015
+CF	D0	inb	1015
 D5		int	1016
 D7		int	1017
 D9		bin	1018
