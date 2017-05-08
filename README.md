@@ -1,6 +1,8 @@
 swtparser
 =========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fnogatz/node-swtparser.svg)](https://greenkeeper.io/)
+
 Parse SWT [Swiss-Chess](http://swiss-chess.de/) Tournament files with JavaScript, either by using [node.js](http://nodejs.org) or directly in your Browser.
 
 ## Usage with node.js
