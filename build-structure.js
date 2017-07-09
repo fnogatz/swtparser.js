@@ -89,7 +89,8 @@ function loadStructureCSV (filename, callback) {
 }
 
 var Structure = function (version) {
-  // ignore version yet
+  this.version = version
+
   this.parameters = null
   this.structures = {}
   this.selections = {}
@@ -99,35 +100,37 @@ var Structure = function (version) {
 Structure.prototype.init = function (callback) {
   var self = this
 
-  fs.readdir(structurePath, function (err, files) {
+  var versionPath = path.join(structurePath, this.version)
+
+  fs.readdir(versionPath, function (err, files) {
     if (err) { return callback(err) }
 
     async.forEach(files, function (item, callback) {
       if (/~$/.test(item)) {
         callback(null)
       } else if (/^types.csv$/.test(item)) {
-        loadKeyValueCSV(structurePath + '/' + item, function (err, csv) {
+        loadKeyValueCSV(versionPath + '/' + item, function (err, csv) {
           if (err) { return callback(err) }
 
           self.types = csv
           callback(null)
         })
       } else if (/structure\.csv/.test(item)) {
-        loadKeyValueCSV(structurePath + '/' + item, function (err, csv) {
+        loadKeyValueCSV(versionPath + '/' + item, function (err, csv) {
           if (err) { return callback(err) }
 
           self.parameters = csv
           callback(null)
         })
       } else if (/-selection\.csv/.test(item)) {
-        loadKeyValueCSV(structurePath + '/' + item, function (err, csv) {
+        loadKeyValueCSV(versionPath + '/' + item, function (err, csv) {
           if (err) { return callback(err) }
 
           self.selections[item.replace('-selection.csv', '')] = csv
           callback(null)
         })
       } else if (/\.csv/.test(item)) {
-        loadStructureCSV(structurePath + '/' + item, function (err, structure) {
+        loadStructureCSV(versionPath + '/' + item, function (err, structure) {
           if (err) { return callback(err) }
 
           self.structures[item.replace('.csv', '')] = structure
@@ -143,9 +146,49 @@ Structure.prototype.init = function (callback) {
   })
 }
 
-var Struct = new Structure()
-Struct.init(function (err) {
-  if (err) { throw err }
+var data = {
+  selections: {},
+  versions: {}
+}
 
-  console.log(JSON.stringify(Struct))
+fs.readdir(structurePath, function (err, dir) {
+  if (err) {
+    throw err
+  }
+
+  async.each(dir, function (version, cb) {
+    var isVersionDir = /^[0-9]{3}$/.test(version)
+    if (!isVersionDir) {
+      return cb()
+    }
+
+    var Struct = new Structure(version)
+    Struct.init(function (err) {
+      if (err) {
+        return cb(err)
+      }
+
+      var selectionKey
+      for (var sel in Struct.selections) {
+        if (!data.selections[sel]) {
+          data.selections[sel] = Struct.selections[sel]
+        } else {
+          for (selectionKey in Struct.selects[sel]) {
+            data.selections[sel][selectionKey] = Struct.selects[sel][selectionKey]
+          }
+        }
+      }
+      delete Struct.selections
+
+      data.versions[version] = Struct
+
+      cb()
+    })
+  }, function (err) {
+    if (err) {
+      throw err
+    }
+
+    console.log(JSON.stringify(data))
+  })
 })
