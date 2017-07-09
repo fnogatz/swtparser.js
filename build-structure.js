@@ -105,7 +105,7 @@ Structure.prototype.init = function (callback) {
   fs.readdir(versionPath, function (err, files) {
     if (err) { return callback(err) }
 
-    async.forEach(files, function (item, callback) {
+    async.forEachSeries(files, function (item, callback) {
       if (/~$/.test(item)) {
         callback(null)
       } else if (/^types.csv$/.test(item)) {
@@ -156,7 +156,7 @@ fs.readdir(structurePath, function (err, dir) {
     throw err
   }
 
-  async.each(dir, function (version, cb) {
+  async.eachSeries(dir, function (version, cb) {
     var isVersionDir = /^[0-9]{3}$/.test(version)
     if (!isVersionDir) {
       return cb()
