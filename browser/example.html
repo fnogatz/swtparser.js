@@ -13,6 +13,8 @@
     </style>
     <script src="./swtparser.js"></script>
     <script type="text/javascript">
+      var t = false
+
       function syntaxHighlight(json) {
         if (typeof json != 'string') {
           json = JSON.stringify(json, undefined, 2);
@@ -41,8 +43,20 @@
 
         reader.onload = function(e) {
           view = new DataView(this.result);
+
           parseSWT(view, function(err, tnmt) {
-            document.body.appendChild(document.createElement('pre')).innerHTML = syntaxHighlight(JSON.stringify(tnmt, undefined, 4));
+            if (err) {
+              throw err
+            }
+
+            if (t) {
+              document.body.removeChild(document.getElementById('json'))
+            }
+
+            var node = document.createElement('pre')
+            node.id = 'json'
+            node.innerHTML = syntaxHighlight(JSON.stringify(tnmt, undefined, 4))
+            document.body.appendChild(node)
             t = tnmt; // access it via Firebug...
           });
         }
