@@ -20,7 +20,7 @@
     "async": "0.2.x",
     "browserbuild": "0.7.x",
     "csv": "0.3.x",
-    "interpreted": "0.3.x",
+    "interpreted": "^1.0.1",
     "standard": "^14.3.3"
   },
   "repository": {

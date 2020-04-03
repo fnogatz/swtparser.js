@@ -21,15 +21,5 @@ interpreted({
       callback(null, JSON.parse(json))
     })
     cp.stdin.end()
-  },
-
-  // optional. This method will execute before the file tests.
-  start: function (callback) {
-    callback(null)
-  },
-
-  // optional. This method will execute after the file tests.
-  close: function (callback) {
-    callback(null)
   }
 })
