@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+var fs = require('fs')
+
 var parser = require('../lib/index')
 
 var { program } = require('commander')
@@ -12,7 +14,10 @@ program.parse(process.argv)
 
 if (program.input) {
   // read from file
-  parser.fromFile(program.input, done)
+  fs.readFile(program.input, (err, buffer) => {
+    if (err) { throw err }
+    done(parser.fromBuffer(buffer))
+  })
 } else {
   // read from stdin
   var buffers = []
@@ -20,12 +25,10 @@ if (program.input) {
   process.stdin.on('data', function (buf) { buffers.push(buf) })
   process.stdin.on('end', function () {
     var buffer = Buffer.concat(buffers)
-    parser.fromBuffer(buffer, done)
+    done(parser.fromBuffer(buffer))
   })
 }
 
-function done (err, tnmt) {
-  if (err) { throw err }
-
+function done (tnmt) {
   console.log(JSON.stringify(tnmt, null, parseInt(program.indent)))
 };
