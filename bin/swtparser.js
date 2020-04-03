@@ -1,28 +1,18 @@
 #!/usr/bin/env node
 var parser = require('../lib/index')
 
-var opts = require('nomnom')
-    .option('input', {
-      abbr: 'i',
-      flag: false,
-      help: 'SWT file'
-    })
-    .option('version', {
-      flag: true,
-      help: 'print version and exit',
-      callback: function () {
-        return require('../package.json').version
-      }
-    })
-    .option('indent', {
-      default: 2,
-      help: 'number of spaces to indent JSON sub-structures'
-    })
-    .parse()
+var { program } = require('commander');
 
-if (opts.input) {
+program.version(require('../package.json').version)
+program
+  .option('-i, --input <file>', 'SWT file')
+  .option('--indent <num>', 'number of spaces to indent JSON sub-structures', 2)
+
+program.parse(process.argv)
+
+if (program.input) {
   // read from file
-  parser.fromFile(opts.input, done)
+  parser.fromFile(program.input, done)
 } else {
   // read from stdin
   var buffers = []
@@ -37,5 +27,5 @@ if (opts.input) {
 function done (err, tnmt) {
   if (err) { throw err }
 
-  console.log(JSON.stringify(tnmt, null, opts.indent))
+  console.log(JSON.stringify(tnmt, null, parseInt(program.indent)))
 };
