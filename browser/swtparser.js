@@ -3,7 +3,7 @@ module.exports = parseDataView
 
 var Structure = require('./structure.json')
 
-function parseDataView (view, callback) {
+function parseDataView (view) {
   var i
 
   var version = parseCard(false, view, 0, {
@@ -94,7 +94,7 @@ function parseDataView (view, callback) {
     }
   }
 
-  callback(null, tnmt)
+  return tnmt
 }
 
 function selectStructure (version, which, Structure) {
