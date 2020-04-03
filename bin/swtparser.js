@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var parser = require('../lib/index')
 
 var opts = require('nomnom')
