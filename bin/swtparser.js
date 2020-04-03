@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var parser = require('../lib/index')
 
-var { program } = require('commander');
+var { program } = require('commander')
 
 program.version(require('../package.json').version)
 program
