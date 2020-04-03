@@ -7,11 +7,11 @@
     "swt",
     "swiss-chess"
   ],
-  "version": "1.4.2",
+  "version": "2.0.0",
   "main": "lib/index.js",
   "bin": "bin/swtparser.js",
   "engines": {
-    "node": ">=0.8"
+    "node": ">=8.10.0"
   },
   "dependencies": {
     "commander": "^5.0.0"
@@ -21,7 +21,7 @@
     "browserbuild": "0.7.x",
     "csv": "0.3.x",
     "interpreted": "0.3.x",
-    "standard": "^10.0.2"
+    "standard": "^14.3.3"
   },
   "repository": {
     "type": "git",

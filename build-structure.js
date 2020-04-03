@@ -17,20 +17,20 @@ function loadKeyValueCSV (filename, callback) {
   var out = {}
 
   csv()
-  .from.path(filename, {
-    delimiter: '\t'
-  })
-  .on('record', function (data, index) {
-    if (data[0].match(/^[\w\d]/)) {
-      out[data[0]] = data[1]
-    }
-  })
-  .on('end', function (count) {
-    callback(null, out)
-  })
-  .on('error', function (err) {
-    callback(err)
-  })
+    .from.path(filename, {
+      delimiter: '\t'
+    })
+    .on('record', function (data, index) {
+      if (data[0].match(/^[\w\d]/)) {
+        out[data[0]] = data[1]
+      }
+    })
+    .on('end', function (count) {
+      callback(null, out)
+    })
+    .on('error', function (err) {
+      callback(err)
+    })
 };
 
 /**
@@ -44,48 +44,48 @@ function loadStructureCSV (filename, callback) {
   var out = {}
 
   csv()
-  .from.path(filename, {
-    delimiter: '\t'
-  })
-  .transform(function (data) {
+    .from.path(filename, {
+      delimiter: '\t'
+    })
+    .transform(function (data) {
     // hex values to decimal
-    if (!data[0].match(/^[0-9A-Fa-f]/)) { return false } // comment
+      if (!data[0].match(/^[0-9A-Fa-f]/)) { return false } // comment
 
-    var ret = {
-      field: parseInt(data[3]),
-      type: data[2].substr(0, 3)
-    }
-
-    if (ret.type === 'sel') {
-      if (data[2].length === 3) {
-        ret.selection = ret.field
-      } else {
-        ret.selection = parseInt(data[2].replace(/^sel:/, ''))
+      var ret = {
+        field: parseInt(data[3]),
+        type: data[2].substr(0, 3)
       }
-    }
 
-    if (data[1].length > 0) {
-      ret.from = parseInt(data[0], 16)
-      ret.to = parseInt(data[1], 16)
-    } else {
-      ret.where = parseInt(data[0], 16)
-    }
+      if (ret.type === 'sel') {
+        if (data[2].length === 3) {
+          ret.selection = ret.field
+        } else {
+          ret.selection = parseInt(data[2].replace(/^sel:/, ''))
+        }
+      }
 
-    return ret
-  })
-  .on('record', function (data, index) {
-    if (data) {
-      var field = data.field
-      delete data.field
-      out[field] = data
-    }
-  })
-  .on('end', function (count) {
-    callback(null, out)
-  })
-  .on('error', function (err) {
-    callback(err)
-  })
+      if (data[1].length > 0) {
+        ret.from = parseInt(data[0], 16)
+        ret.to = parseInt(data[1], 16)
+      } else {
+        ret.where = parseInt(data[0], 16)
+      }
+
+      return ret
+    })
+    .on('record', function (data, index) {
+      if (data) {
+        var field = data.field
+        delete data.field
+        out[field] = data
+      }
+    })
+    .on('end', function (count) {
+      callback(null, out)
+    })
+    .on('error', function (err) {
+      callback(err)
+    })
 }
 
 var Structure = function (version) {
