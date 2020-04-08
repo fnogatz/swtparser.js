@@ -17,9 +17,8 @@
     "commander": "^5.0.0"
   },
   "devDependencies": {
-    "async": "0.2.x",
     "browserbuild": "0.7.x",
-    "csv": "0.3.x",
+    "csv-parse": "^4.8.8",
     "interpreted": "^1.0.1",
     "standard": "^14.3.3"
   },
@@ -31,12 +30,10 @@
     "url": "http://github.com/fnogatz/swtparser.js/issues"
   },
   "scripts": {
-    "prepublish": "npm run-script build-structure && npm run-script build-browser",
-    "download-structure": "mkdir tmp && cd tmp && wget https://github.com/fnogatz/SWT-structure-files/archive/master.zip && unzip master.zip && cp -R SWT-structure-files-master/structure/* ../structure && cd .. && rm -Rf tmp;",
     "build-structure": "node build-structure.js > lib/structure.json",
     "build-browser": "./node_modules/browserbuild/bin/browserbuild -m from-data-view -g parseSWT -b lib/ lib/from-data-view.js lib/structure.json > browser/swtparser.js",
     "standard": "standard",
-    "test-parser": "node ./test/index",
+    "test-parser": "node ./test/index.js",
     "test": "npm run standard && npm run test-parser",
     "fake-tests": "node bin/swtparser.js < test/SWT/SwissIndividual.SWT > test/JSON/SwissIndividual.json && node bin/swtparser.js < test/SWT/SwissTeam.SWT > test/JSON/SwissTeam.json"
   },
