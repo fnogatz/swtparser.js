@@ -98,27 +98,24 @@ function parseDataView (view) {
 }
 
 function selectStructure (version, which, Structure) {
-  var currStructure
+  let currStructure
 
-  loopVersion: for (var currVersion in Structure.versions) { // eslint-disable-line no-labels
+  loopVersion: for (const currVersion in Structure.versions) { // eslint-disable-line no-labels
     if (parseInt(currVersion) > parseInt(version)) {
       break
     }
 
-    var el = Structure.versions[currVersion]
-    var parts = which.split('.')
-    var part
+    let el = Structure.versions[currVersion]
+    const parts = which.split('.')
+    let part
 
-    for (var i = 0; i < parts.length; i++) {
+    for (let i = 0; i < parts.length; i++) {
       part = parts[i]
-
       if (!el[part]) {
         continue loopVersion // eslint-disable-line no-labels
       }
-
       el = el[part]
     }
-
     currStructure = el
   }
 
@@ -130,13 +127,12 @@ function getSelections (version, Structure) {
 }
 
 function getNearestStructure (version, Structure) {
-  var currStructure
+  let currStructure
 
-  for (var currVersion in Structure.versions) {
+  for (const currVersion in Structure.versions) {
     if (parseInt(currVersion) > parseInt(version)) {
       break
     }
-
     currStructure = Structure.versions[currVersion]
   }
 
@@ -146,7 +142,7 @@ function getNearestStructure (version, Structure) {
 function parseCard (version, view, offset, structure, Structure) {
   if (typeof structure === 'string') {
     // select structure by version first
-    var newStructure = selectStructure(version, structure, Structure)
+    const newStructure = selectStructure(version, structure, Structure)
     if (!structure) {
       throw new Error('Missing structure for "' + structure + '" in version ' + version)
     }
@@ -154,94 +150,99 @@ function parseCard (version, view, offset, structure, Structure) {
     return parseCard(version, view, offset, newStructure, Structure)
   }
 
-  var pos
-  var bin
-
-  var object = {}
-  var selections = getSelections(version, Structure)
-  for (var field in structure) {
-    if (structure[field].type === 'int' || structure[field].type === 'inb' || structure[field].type === 'in9') {
-      // int: content is integer value, little endian
-      // inb: content is integer value, big endian
-      // in9: content is integer value, big endian, minus 998
-
-      var littleEndian = !(structure[field].type === 'int')
-      if ('where' in structure[field]) {
-        object[field] = view.getUint8(offset + structure[field].where)
-      } else if ('from' in structure[field] && 'to' in structure[field]) {
-        var diff = structure[field].to - structure[field].from
-        if (diff === 0) { object[field] = view.getInt8(offset + structure[field].from) } else if (diff === 1) { object[field] = view.getInt16(offset + structure[field].from, littleEndian) } else if (diff === 2) { object[field] = view.getInt32(offset + structure[field].from, littleEndian) }
-      }
-      if (structure[field].type === 'in9') {
-        object[field] = object[field] - 998
-      }
-    } else if (structure[field].type === 'boo') {
-      // content is boolean
-      if ('where' in structure[field]) {
-        object[field] = view.getUint8(offset + structure[field].where) === 255
-      }
-    } else if (structure[field].type === 'asc') {
-      // content is in ASCII format
-      if ('from' in structure[field] && 'to' in structure[field]) {
-        object[field] = getString(view, offset + structure[field].from, offset + structure[field].to)
-      } else if ('where' in structure[field]) {
-        pos = offset + structure[field].where
-        object[field] = getString(view, pos, pos)
-      }
-    } else if (structure[field].type === 'dat') {
-      var days = 0
-      if ('from' in structure[field] && 'to' in structure[field]) {
-        if (structure[field].to === structure[field].from + 1) {
-          days = view.getUint16(structure[field].from, true)
+  const object = {}
+  const selections = getSelections(version, Structure)
+  for (const field in structure) {
+    const type = structure[field].type
+    let bigEndian = true
+    switch (type) {
+      case 'int': // content is integer value, little endian
+        bigEndian = false
+        // falls through
+      case 'inb': // content is integer value, big endian
+      case 'in9': // content is integer value, big endian, minus 998
+        if ('where' in structure[field]) {
+          object[field] = view.getUint8(offset + structure[field].where)
+        } else if ('from' in structure[field] && 'to' in structure[field]) {
+          const diff = structure[field].to - structure[field].from
+          if (diff === 0) {
+            object[field] = view.getInt8(offset + structure[field].from)
+          } else if (diff === 1) {
+            object[field] = view.getInt16(offset + structure[field].from, bigEndian)
+          } else if (diff === 2) {
+            object[field] = view.getInt32(offset + structure[field].from, bigEndian)
+          }
         }
-      }
-      if (days > 0) {
-        var date = new Date('12/30/1899')
-        date.setTime(date.getTime() + 1000 * 60 * 60 * 24 * days)
-        object[field] = date.toDateString()
-      }
-    } else if (structure[field].type === 'tim') {
-      if ('from' in structure[field] && 'to' in structure[field]) {
-        if (structure[field].to === structure[field].from + 1) {
-          var d = new Date()
-          d.setHours(view.getUint8(structure[field].from))
-          d.setMinutes(view.getUint8(structure[field].to))
-          if (d.toTimeString().slice(0, 5) !== '00:00') { object[field] = d.toTimeString().slice(0, 5) }
+        if (structure[field].type === 'in9') {
+          object[field] = object[field] - 998
         }
-      }
-    } else if (structure[field].type === 'bin') {
-      // content is binary value
-      if ('where' in structure[field]) {
-        bin = view.getUint8(offset + structure[field].where).toString(16)
-        if (bin.length === 1) { bin = '0' + bin }
-        object[field] = bin
-      } else if ('from' in structure[field] && 'to' in structure[field]) {
-        object[field] = ''
-        for (pos = structure[field].from; pos <= structure[field].to; pos++) {
-          bin = view.getUint8(offset + structure[field].where).toString(16)
+        break
+      case 'boo': // content is boolean
+        if ('where' in structure[field]) {
+          object[field] = view.getUint8(offset + structure[field].where) === 255
+        }
+        break
+      case 'asc': // content is in ASCII format
+        if ('from' in structure[field] && 'to' in structure[field]) {
+          object[field] = getString(view, offset + structure[field].from, offset + structure[field].to)
+        } else if ('where' in structure[field]) {
+          const pos = offset + structure[field].where
+          object[field] = getString(view, pos, pos)
+        }
+        break
+      case 'dat':
+        var days = 0
+        if ('from' in structure[field] && 'to' in structure[field]) {
+          if (structure[field].to === structure[field].from + 1) {
+            days = view.getUint16(structure[field].from, true)
+          }
+        }
+        if (days > 0) {
+          var date = new Date('12/30/1899')
+          date.setTime(date.getTime() + 1000 * 60 * 60 * 24 * days)
+          object[field] = date.toDateString()
+        }
+        break
+      case 'tim':
+        if ('from' in structure[field] && 'to' in structure[field]) {
+          if (structure[field].to === structure[field].from + 1) {
+            var d = new Date()
+            d.setHours(view.getUint8(structure[field].from))
+            d.setMinutes(view.getUint8(structure[field].to))
+            if (d.toTimeString().slice(0, 5) !== '00:00') { object[field] = d.toTimeString().slice(0, 5) }
+          }
+        }
+        break
+      case 'bin': // content is binary value
+        if ('where' in structure[field]) {
+          let bin = view.getUint8(offset + structure[field].where).toString(16)
           if (bin.length === 1) { bin = '0' + bin }
-          object[field] += bin
+          object[field] = bin
+        } else if ('from' in structure[field] && 'to' in structure[field]) {
+          object[field] = ''
+          for (let pos = structure[field].from; pos <= structure[field].to; pos++) {
+            let bin = view.getUint8(offset + structure[field].where).toString(16)
+            if (bin.length === 1) { bin = '0' + bin }
+            object[field] += bin
+          }
         }
-      }
-    } else if (structure[field].type === 'bib') {
-      // Content is binary value, big endian
+        break
+      case 'bib': // content is binary value, big endian
+        object[field] = view.getInt16(offset + structure[field].from, true).toString(16)
+        break
+      case 'sel':
+        if ('where' in structure[field]) {
+          var sel = view.getInt8(offset + structure[field].where).toString(16)
+          if (sel.length === 1) { sel = '0' + sel }
+          sel = sel.toUpperCase()
 
-      bin = view.getInt16(offset + structure[field].from, true).toString(16)
-      object[field] = bin
-    } else if (structure[field].type === 'sel' &&
-      structure[field].selection &&
-      structure[field].selection in selections) {
-      if ('where' in structure[field]) {
-        var sel = view.getInt8(offset + structure[field].where).toString(16)
-        if (sel.length === 1) { sel = '0' + sel }
-        sel = sel.toUpperCase()
-
-        if (sel in selections[structure[field].selection]) {
-          object[field] = structure[field].selection + '-' + selections[structure[field].selection][sel]
+          if (sel in selections[structure[field].selection]) {
+            object[field] = structure[field].selection + '-' + selections[structure[field].selection][sel]
+          }
         }
-      }
-    } else {
-      throw new Error(`Unknown type '${structure[field].type}'`)
+        break
+      default:
+        throw new Error(`Unknown type '${structure[field].type}'`)
     }
   }
 
@@ -249,9 +250,9 @@ function parseCard (version, view, offset, structure, Structure) {
 }
 
 function getString (view, from, to) {
-  var value = ''
-  for (var i = 0; i <= to - from; i++) {
-    var char = view.getUint8(from + i)
+  let value = ''
+  for (let i = 0; i <= to - from; i++) {
+    const char = view.getUint8(from + i)
     if (char === 0) { break }
     value += String.fromCharCode(char)
   }
@@ -266,8 +267,8 @@ function getString (view, from, to) {
 * @return {Array} of players
 */
 function getOrderedPlayers (tnmt) {
-  var res = []
-  for (var i = 0; i < tnmt.players.length; i++) {
+  const res = []
+  for (let i = 0; i < tnmt.players.length; i++) {
     res[tnmt.players[i].positionInSWT] = tnmt.players[i]['2020']
   }
   return res
@@ -281,8 +282,8 @@ function getOrderedPlayers (tnmt) {
 * @return {Array} of teams
 */
 function getOrderedTeams (tnmt) {
-  var res = []
-  for (var i = 0; i < tnmt.teams.length; i++) {
+  const res = []
+  for (let i = 0; i < tnmt.teams.length; i++) {
     res[tnmt.teams[i].positionInSWT] = tnmt.teams[i]['1018']
   }
   return res
