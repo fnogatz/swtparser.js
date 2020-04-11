@@ -17,7 +17,7 @@
     "commander": "^5.0.0"
   },
   "devDependencies": {
-    "browserbuild": "0.7.x",
+    "browserify": "^16.5.1",
     "csv-parse": "^4.8.8",
     "interpreted": "^1.0.1",
     "standard": "^14.3.3"
@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build-structure": "node build-structure.js > lib/structure.json",
-    "build-browser": "./node_modules/browserbuild/bin/browserbuild -m from-data-view -g parseSWT -b lib/ lib/from-data-view.js lib/structure.json > browser/swtparser.js",
+    "build-browser": "browserify lib/from-data-view.js --standalone=parseDataView -o browser/swtparser.js",
     "standard": "standard",
     "test-parser": "node ./test/index.js",
     "test": "npm run standard && npm run test-parser",

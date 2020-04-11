@@ -44,7 +44,7 @@
         reader.onload = function(e) {
           view = new DataView(this.result);
 
-          var tnmt = parseSWT(view);
+          var tnmt = parseDataView(view);
           if (t) {
             document.body.removeChild(document.getElementById('json'))
           }
