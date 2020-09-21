@@ -143,7 +143,7 @@ function parseCard (version, view, offset, structure, Structure) {
   if (typeof structure === 'string') {
     // select structure by version first
     const newStructure = selectStructure(version, structure, Structure)
-    if (!structure) {
+    if (!newStructure) {
       throw new Error('Missing structure for "' + structure + '" in version ' + version)
     }
 
