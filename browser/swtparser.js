@@ -221,7 +221,7 @@ function parseCard (version, view, offset, structure, Structure) {
         } else if ('from' in structure[field] && 'to' in structure[field]) {
           object[field] = ''
           for (let pos = structure[field].from; pos <= structure[field].to; pos++) {
-            let bin = view.getUint8(offset + structure[field].where).toString(16)
+            let bin = view.getUint8(offset + pos).toString(16)
             if (bin.length === 1) { bin = '0' + bin }
             object[field] += bin
           }
