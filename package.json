@@ -9,7 +9,9 @@
   ],
   "version": "3.0.6",
   "main": "lib/index.js",
-  "bin": "bin/swtparser.js",
+  "bin": {
+    "swtparser": "bin/swtparser.js"
+  },
   "engines": {
     "node": ">=8.10.0"
   },
