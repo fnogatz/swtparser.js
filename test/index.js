@@ -1,6 +1,6 @@
-var path = require('path')
-var childProcess = require('child_process')
-var interpreted = require('interpreted')
+const path = require('path')
+const childProcess = require('child_process')
+const interpreted = require('interpreted')
 
 interpreted({
   source: path.resolve(__dirname, 'SWT'),
@@ -10,10 +10,10 @@ interpreted({
   // This method will be used to test the files.
   test: function (name, content, callback) {
     console.log(name)
-    var cp = childProcess.spawn('node', [path.resolve(__dirname, '..', 'bin', 'swtparser.js'), '--input', path.resolve(__dirname, 'SWT', name + '.SWT')])
+    const cp = childProcess.spawn('node', [path.resolve(__dirname, '..', 'bin', 'swtparser.js'), '--input', path.resolve(__dirname, 'SWT', name + '.SWT')])
 
     cp.stdout.setEncoding('utf8')
-    var json = ''
+    let json = ''
     cp.stdout.on('data', function (data) {
       json += data
     })

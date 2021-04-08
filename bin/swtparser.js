@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-var fs = require('fs')
+const fs = require('fs')
 
-var parser = require('../lib/index')
+const parser = require('../lib/index')
 
-var { program } = require('commander')
+const { program } = require('commander')
 
 program.version(require('../package.json').version)
 program
@@ -20,11 +20,11 @@ if (program.input) {
   })
 } else {
   // read from stdin
-  var buffers = []
+  const buffers = []
   process.stdin.resume()
   process.stdin.on('data', function (buf) { buffers.push(buf) })
   process.stdin.on('end', function () {
-    var buffer = Buffer.concat(buffers)
+    const buffer = Buffer.concat(buffers)
     done(parser.fromBuffer(buffer))
   })
 }
