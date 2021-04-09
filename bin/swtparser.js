@@ -11,10 +11,11 @@ program
   .option('--indent <num>', 'number of spaces to indent JSON sub-structures', 2)
 
 program.parse(process.argv)
+const options = program.opts()
 
-if (program.input) {
+if (options.input) {
   // read from file
-  fs.readFile(program.input, (err, buffer) => {
+  fs.readFile(options.input, (err, buffer) => {
     if (err) { throw err }
     done(parser.fromBuffer(buffer))
   })
@@ -30,5 +31,5 @@ if (program.input) {
 }
 
 function done (tnmt) {
-  console.log(JSON.stringify(tnmt, null, parseInt(program.indent)))
+  console.log(JSON.stringify(tnmt, null, parseInt(options.indent)))
 };
