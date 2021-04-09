@@ -32,4 +32,4 @@ if (options.input) {
 
 function done (tnmt) {
   console.log(JSON.stringify(tnmt, null, parseInt(options.indent)))
-};
+}
