@@ -1,12 +1,12 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.parseDataView = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = parseDataView
 
-var Structure = require('./structure.json')
+const Structure = require('./structure.json')
 
 function parseDataView (view) {
-  var i
+  let i
 
-  var version = parseCard(false, view, 0, {
+  let version = parseCard(false, view, 0, {
     version: {
       type: 'inb',
       from: 609,
@@ -15,9 +15,9 @@ function parseDataView (view) {
   }, Structure)
   version = version.version
 
-  var structure = getNearestStructure(version, Structure)
+  const structure = getNearestStructure(version, Structure)
 
-  var tnmt = {
+  const tnmt = {
     players: [],
     pairings_players: []
   }
@@ -26,7 +26,7 @@ function parseDataView (view) {
   tnmt.general = parseCard(version, view, 0, 'structures.general', Structure)
 
   // read players
-  var playerOffset = parseInt(structure.parameters['start:fixtures_players'])
+  let playerOffset = parseInt(structure.parameters['start:fixtures_players'])
   if (tnmt.general[3] > 0) {
     if (tnmt.general[35]) {
       playerOffset += (tnmt.general[4] * tnmt.general[1] * parseInt(structure.parameters['length:pairing'])) +
@@ -35,7 +35,7 @@ function parseDataView (view) {
       playerOffset += (tnmt.general[4] * tnmt.general[1] * parseInt(structure.parameters['length:pairing']))
     }
   }
-  var player
+  let player
 
   for (i = 0; i < tnmt.general[4]; i++, playerOffset += parseInt(structure.parameters['length:player'])) {
     player = parseCard(version, view, playerOffset, 'structures.player', Structure)
@@ -45,9 +45,9 @@ function parseDataView (view) {
 
   if (tnmt.general[3] > 0) {
     // read players' pairings
-    var playerPairingOffset = parseInt(structure.parameters['start:fixtures_players'])
-    var playerPairing
-    var orderedPlayers = getOrderedPlayers(tnmt)
+    let playerPairingOffset = parseInt(structure.parameters['start:fixtures_players'])
+    let playerPairing
+    const orderedPlayers = getOrderedPlayers(tnmt)
     for (i = 0; i < tnmt.general[1] * tnmt.general[4]; i++, playerPairingOffset += parseInt(structure.parameters['length:pairing'])) {
       playerPairing = parseCard(version, view, playerPairingOffset, 'structures.individual-pairings', Structure)
       playerPairing.player = orderedPlayers[Math.floor(i / tnmt.general[1])]
@@ -64,13 +64,13 @@ function parseDataView (view) {
     tnmt.pairings_teams = []
 
     // read teams
-    var teamOffset = parseInt(structure.parameters['start:fixtures_players']) +
+    let teamOffset = parseInt(structure.parameters['start:fixtures_players']) +
                         (tnmt.general[4] * parseInt(structure.parameters['length:player']))
     if (tnmt.general[3] > 0) {
       teamOffset += (tnmt.general[4] * tnmt.general[1] * parseInt(structure.parameters['length:pairing'])) +
                     (tnmt.general[80] * tnmt.general[1] * parseInt(structure.parameters['length:pairing']))
     }
-    var team
+    let team
     for (i = 0; i < tnmt.general[80]; i++, teamOffset += parseInt(structure.parameters['length:team'])) {
       team = parseCard(version, view, teamOffset, 'structures.team', Structure)
       team.positionInSWT = i
@@ -79,10 +79,10 @@ function parseDataView (view) {
 
     if (tnmt.general[3] > 0) {
       // read teams' pairings
-      var teamPairingOffset = parseInt(structure.parameters['start:fixtures_players']) +
+      let teamPairingOffset = parseInt(structure.parameters['start:fixtures_players']) +
                               (tnmt.general[1] * tnmt.general[4] * parseInt(structure.parameters['length:pairing']))
-      var teamPairing
-      var orderedTeams = getOrderedTeams(tnmt)
+      let teamPairing
+      const orderedTeams = getOrderedTeams(tnmt)
       for (i = 0; i < tnmt.general[1] * tnmt.general[80]; i++, teamPairingOffset += parseInt(structure.parameters['length:pairing'])) {
         teamPairing = parseCard(version, view, teamPairingOffset, 'structures.team-pairings', Structure)
         teamPairing.team = orderedTeams[Math.floor(i / tnmt.general[1])]
@@ -155,6 +155,7 @@ function parseCard (version, view, offset, structure, Structure) {
   for (const field in structure) {
     const type = structure[field].type
     let bigEndian = true
+    let days = 0
     switch (type) {
       case 'int': // content is integer value, little endian
         bigEndian = false
@@ -191,14 +192,13 @@ function parseCard (version, view, offset, structure, Structure) {
         }
         break
       case 'dat':
-        var days = 0
         if ('from' in structure[field] && 'to' in structure[field]) {
           if (structure[field].to === structure[field].from + 1) {
             days = view.getUint16(structure[field].from, true)
           }
         }
         if (days > 0) {
-          var date = new Date('12/30/1899')
+          const date = new Date('12/30/1899')
           date.setTime(date.getTime() + 1000 * 60 * 60 * 24 * days)
           object[field] = date.toDateString()
         }
@@ -206,7 +206,7 @@ function parseCard (version, view, offset, structure, Structure) {
       case 'tim':
         if ('from' in structure[field] && 'to' in structure[field]) {
           if (structure[field].to === structure[field].from + 1) {
-            var d = new Date()
+            const d = new Date()
             d.setHours(view.getUint8(structure[field].from))
             d.setMinutes(view.getUint8(structure[field].to))
             if (d.toTimeString().slice(0, 5) !== '00:00') { object[field] = d.toTimeString().slice(0, 5) }
@@ -232,7 +232,7 @@ function parseCard (version, view, offset, structure, Structure) {
         break
       case 'sel':
         if ('where' in structure[field]) {
-          var sel = view.getInt8(offset + structure[field].where).toString(16)
+          let sel = view.getInt8(offset + structure[field].where).toString(16)
           if (sel.length === 1) { sel = '0' + sel }
           sel = sel.toUpperCase()
 
