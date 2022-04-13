@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "browserify": "^17.0.0",
-    "csv-parse": "^4.8.8",
+    "csv-parse": "^5.0.4",
     "interpreted": "^1.0.1",
     "standard": "^16.0.3"
   },

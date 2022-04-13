@@ -1,6 +1,6 @@
 const fs = require('fs').promises
 const path = require('path')
-const parse = require('csv-parse/lib/sync')
+const { parse } = require('csv-parse/sync')
 
 const structurePath = path.join(__dirname, 'definitions')
 
