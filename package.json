@@ -16,7 +16,7 @@
     "node": ">=8.10.0"
   },
   "dependencies": {
-    "commander": "^7.2.0"
+    "commander": "^9.1.0"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
