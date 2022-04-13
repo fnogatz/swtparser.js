@@ -7,7 +7,7 @@
     "swt",
     "swiss-chess"
   ],
-  "version": "3.0.7",
+  "version": "3.0.8",
   "main": "lib/index.js",
   "bin": {
     "swtparser": "bin/swtparser.js"
