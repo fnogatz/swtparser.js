@@ -8,6 +8,7 @@
     "swiss-chess"
   ],
   "version": "3.1.0",
+  "license": "MIT",
   "main": "lib/index.js",
   "bin": {
     "swtparser": "bin/swtparser.js"
