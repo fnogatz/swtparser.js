@@ -17,7 +17,7 @@ const structurePath = path.join(__dirname, 'definitions')
     }
 
     const spec = {
-      version: version,
+      version,
       structures: {}
     }
 
